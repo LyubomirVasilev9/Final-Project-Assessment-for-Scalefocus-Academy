@@ -1,48 +1,29 @@
 pipeline {
-  agent any
-
-  stages {
-    stage('Namespace Check') {
-      steps {
-        script {
-          try {
-            def nsExists = bat(
-              returnStatus: true,
-              script: 'kubectl get namespace wp'
-            )
-            if (nsExists == 0) {
-              echo "Namespace wp already exists"
-            } else {
-              echo "Creating namespace wp"
-              bat 'kubectl create namespace wp'
+    agent any
+    
+    stages {
+        stage('Check and Create Namespace') {
+            steps {
+                script {
+                    // Check if the 'wp' namespace exists
+                    def namespace ='wp'
+                    def namespaceExists = false
+                    
+                    try {
+                        sh(returnStdout: true, script: "minikube kubectl get namespaces ${namespace} | grep -w ${namespace}").trim()
+                        namespaceExists = true
+                    } catch (Exception e) {
+                        echo "Namespace $namespace does not exist."
+                    }
+                    
+                    if (namespaceExists) {
+                        echo "Namespace $namespace already exists."
+                    } else {
+                        echo "Namespace $namespace does not exist. Creating..."
+                        sh "minikube kubectl create namespace $namespace"
+                    }
+                }
             }
-          } catch (Exception e) {
-            echo "Error checking/creating namespace wp: ${e.getMessage()}"
-          }
         }
-      }
     }
-
-    stage('Helm Install') {
-      steps {
-        script {
-          try {
-            bat 'helm dependency build bitnami/wordpress'
-            def chartExists = bat(
-              returnStatus: true,
-              script: 'helm list -q wp --namespace wp'
-            )
-            if (chartExists == 0) {
-              echo "Chart wp already exists"
-            } else {
-              echo "Installing chart wp"
-              bat 'helm install wp bitnami/wordpress --namespace wp -f bitnami/wordpress/values.yaml --set service.type=ClusterIP'
-            }
-          } catch (Exception e) {
-            echo "Error installing Helm chart: ${e.getMessage()}"
-          }
-        }
-      }
-    }
-  }
 }
