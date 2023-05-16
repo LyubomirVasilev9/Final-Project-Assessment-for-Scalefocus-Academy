@@ -16,17 +16,17 @@ Requirement for the Project Assessment:
 https://github.com/bitnami/charts/tree/main/bitnami/wordpress )
 2. In values.yaml, you need to change line 543 from type: LoadBalancer to type: ClusterIP ( Hint: there
 will be one more problem when deploying. Resolve it. – change the port forward for wordpress with a free port ,because port 8080 is used by Jenkins.
- ![img2](imgs/port.jpg)
+ ![img2](imgs/port.JPG)
 3. Create a Jenkins pipeline that checks if wp namespace exists, if it doesn’t then it creates one.
 Checks if WordPress exists, if it doesn’t then it installs the chart.
- ![img3](imgs/jenkins.jpg)
+ ![img3](imgs/jenkins.JPG)
 4. Name the Helm Deployment as: final-project-wp-scalefocus.
- ![img4](imgs/helm.jpg)
+ ![img4](imgs/helm.JPG)
 5. Deploy the helm chart using the Jenkins pipeline.
- ![img5](imgs/jenkins.jpg)
+ ![img5](imgs/jenkins.JPG)
 6. Load the home page of the WordPress to see the final result.
- ![img6](imgs/wordpress.jpg)
- ![img7](imgs/wordpress1.jpg)
+ ![img6](imgs/wordpress.JPG)
+ ![img7](imgs/wordpress1.JPG)
 7. Explain the project directly in a README.md file in your project repo.
 BONUS POINTS:
 - Instead of using Minicube, consider using a different Kubernetes flavor of your choice, like k3s, k8s,
