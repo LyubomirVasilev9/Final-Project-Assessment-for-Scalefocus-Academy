@@ -10,7 +10,7 @@ Here is the link to install Jenkins :  https://www.jenkins.io/doc/book/installin
 2. Separate repo in your GitHub Profile named: Final Project Assessment for Scalefocus Academy
 Requirement for the Project Assessment:
 
-![img1](imgs/start.jpg)
+![img1](imgs/start.JPG)
  
 1. Download Helm chart for WordPress. ( Bitnami chart:
 https://github.com/bitnami/charts/tree/main/bitnami/wordpress )
